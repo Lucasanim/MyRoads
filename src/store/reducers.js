@@ -26,6 +26,7 @@ export const locationReducer = (state=initialState, action) => {
                     ...state.locations, {
                         title: action.payload.title,
                         id: action.payload.id ,
+                        date: action.payload.date,
                         roads: state.currentRoad
                     }
                 ]

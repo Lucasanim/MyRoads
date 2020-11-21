@@ -9,7 +9,11 @@ export const clearCurrentRoad = () => (dispatch) => {
 }
 
 export const storeCurrentRoad = (title) => async(dispatch) => {
+
+    var old_date = new Date()
+    var date = old_date.toString().replace(/GMT.*/g,"")
+    console.log('date: ', date)
         
-    await dispatch({type:'STORE_CURRENT_ROAD',payload:{title, id: uuid()}})
-    clearCurrentRoad()
+    await dispatch({type:'STORE_CURRENT_ROAD',payload:{title, id: uuid(), date}})
+    dispatch(clearCurrentRoad())
 }

@@ -16,6 +16,7 @@ const RoadListScreen = ({navigation}) => {
 
     return(
         <View style={styles.container} >
+            <View style={{margin:5}} />
             <FlatList 
                 data={tracks}
                 keyExtractor={(track) => track.id}
@@ -25,6 +26,7 @@ const RoadListScreen = ({navigation}) => {
                         style={styles.textContainer}
                     >
                         <Text style={styles.text} >{item.title} </Text>
+                        <Text style={styles.dateText} >{item.date} </Text>
                     </TouchableOpacity>
                 }}
             />
@@ -48,6 +50,12 @@ const styles = StyleSheet.create({
         marginVertical:5,   
         borderRadius: 10,
         marginHorizontal:'5%'
+    },
+    dateText:{
+        fontSize:16,
+        padding:10,
+        paddingTop:0,
+        color:'black'
     },
 })
 

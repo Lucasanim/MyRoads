@@ -6,7 +6,7 @@ import {
     
 } from 'react-native'
 
-import MapView, {PROVIDER_GOOGLE, Polyline} from 'react-native-maps'
+import MapView, {PROVIDER_GOOGLE, Polyline, MarkerAnimated} from 'react-native-maps'
 
 const RoadDetailScreen = ({route}) => {
 
@@ -33,11 +33,14 @@ const RoadDetailScreen = ({route}) => {
                     },
                     heading: 0,
                     pitch: 0,
-                    zoom: 11,
+                    zoom: 16,
                 }}
                 
                 
             >
+                <MarkerAnimated 
+                    coordinate={first.coords}
+                />
                 <Polyline 
                     coordinates={Road.roads.map( loc => loc.coords)}
                     strokeWidth={10}
@@ -45,6 +48,7 @@ const RoadDetailScreen = ({route}) => {
                     strokeColor="rgba(255, 0, 99, 0.7)"
                 />
             </MapView>
+            <Text>{Road.date} </Text>
         </View>
     )
 }

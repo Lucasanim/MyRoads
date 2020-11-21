@@ -61,8 +61,8 @@ const Map = ({coords}) => {
                                 longitude: coords.longitude,
                             }}
                         radius={coords.accuracy}
-                        strokeColor="rgba(158,158,255,1.0)"
-                        fillColor="rgba(158,158,255,0.3)"
+                        strokeColor="rgba(255, 255, 255, 1)"
+                        fillColor="rgba(0, 171, 255, 0.9)"
                     />
                 ) }
             </MapView>

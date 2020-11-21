@@ -6,19 +6,32 @@ import {View,
     TouchableOpacity,
     ToastAndroid,
     Platform,
+    TextInput,
     } from 'react-native'
 import Map from '../components/Map'
 
 import Geolocation from 'react-native-geolocation-service';
 
-const IndexScreen = () => {
+import { useDispatch, useSelector } from 'react-redux'
+import { saveRoads, storeCurrentRoad } from '../store/actions'
+
+const CreateRoadScreen = () => {
     //renders map
 
     const [location, setLocation] = useState(null)
     const [recording, setRecording] = useState(true)
     const [watchId, setWatchId] = useState(null)
+    const [title, setTitle] = useState('')
 
     console.log(recording)
+
+    const dispatch = useDispatch()
+
+    const road = useSelector((state) => state.currentRoad)
+    console.log('road: ', road)
+
+    const loc = useSelector((state) => state.locations)
+    console.log('myloc: ', loc)
 
     async function  hasLocationPermission(){
       //request and check location permission
@@ -97,7 +110,11 @@ const IndexScreen = () => {
         if(recording){
             let id = Geolocation.watchPosition(
                 (position) => {
+                
                 setLocation(position)
+
+                dispatch(saveRoads(position))
+
                 console.log('watchid: ',position);
                 },
                 (error) => {
@@ -143,14 +160,25 @@ const IndexScreen = () => {
     return (
         <View style={styles.container} >
             <Map coords={location ?location.coords : null} />
+            <TextInput onChangeText={(text) => setTitle(text)} 
+              style={styles.input}
+            />
             {
                 recording
-                ? <TouchableOpacity
+                ? <>
+                  <TouchableOpacity
                     onPress={() => stopLocationUpdates() }
                     style={styles.button}
-                >
-                    <Text style={styles.buttonText} >Dejar de grabar.</Text>
-                </TouchableOpacity>
+                  >
+                      <Text style={styles.buttonText} >Dejar de grabar.</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => dispatch(storeCurrentRoad(title))}
+                    style={styles.saveButton}
+                  >
+                    <Text style={styles.buttonText}>Guardar</Text>
+                  </TouchableOpacity>
+                </>
                 :<TouchableOpacity
                     onPress={()=>{
                         startLocationUpdates()
@@ -179,6 +207,15 @@ const styles = StyleSheet.create({
     paddingVertical:10,
     paddingHorizontal:20,
   },  
+  saveButton:{
+    backgroundColor: 'red',
+    margin:5,
+  },
+  input:{
+    padding:5,
+    borderWidth:2,
+
+  },
 })
 
-export default IndexScreen
+export default CreateRoadScreen

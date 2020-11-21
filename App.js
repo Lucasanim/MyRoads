@@ -10,13 +10,14 @@ import {
 import { Provider } from 'react-redux'
 import {store} from './src/store/store'
 
-import IndexScreen from './src/screens/IndexScreen';
+import { NavigationContainer } from '@react-navigation/native'
+import ButtonTabNav from './src/navigation/ButtonTabNav';
 
 const App = () => {
   return (
-    <>
-    <IndexScreen />
-    </>
+    <NavigationContainer>
+      <ButtonTabNav />
+    </NavigationContainer>
   );
 };
 

@@ -73,7 +73,7 @@ const Map = ({coords}) => {
 const styles = StyleSheet.create({
     container:{
         ...StyleSheet.absoluteFillObject,
-        height:400,
+        height:'100%',
     },
     map:{
         ...StyleSheet.absoluteFillObject,

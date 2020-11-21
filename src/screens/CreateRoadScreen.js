@@ -162,32 +162,36 @@ const CreateRoadScreen = () => {
             <Map coords={location ?location.coords : null} />
             <TextInput onChangeText={(text) => setTitle(text)} 
               style={styles.input}
+              placeholder='nombre'
             />
-            {
-                recording
-                ? <>
-                  <TouchableOpacity
-                    onPress={() => stopLocationUpdates() }
-                    style={styles.button}
+            <View style={{flexDirection:'row'}}>
+              {
+                  recording
+                  ? <>
+                    <TouchableOpacity
+                      onPress={() => stopLocationUpdates() }
+                      style={styles.button}
+                    >
+                        <Text style={styles.buttonText} >Dejar de grabar.</Text>
+                    </TouchableOpacity>
+                    
+                  </>
+                  :<TouchableOpacity
+                      onPress={()=>{
+                          startLocationUpdates()
+                      }}
+                      style={styles.button}
                   >
-                      <Text style={styles.buttonText} >Dejar de grabar.</Text>
+                      <Text style={styles.buttonText} >Empezar a grabar.</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => dispatch(storeCurrentRoad(title))}
-                    style={styles.saveButton}
-                  >
-                    <Text style={styles.buttonText}>Guardar</Text>
-                  </TouchableOpacity>
-                </>
-                :<TouchableOpacity
-                    onPress={()=>{
-                        startLocationUpdates()
-                    }}
-                    style={styles.button}
-                >
-                    <Text style={styles.buttonText} >Empezar a grabar.</Text>
-                </TouchableOpacity>
-            }
+              }
+              <TouchableOpacity
+                onPress={() => dispatch(storeCurrentRoad(title))}
+                style={styles.saveButton}
+              >
+                <Text style={styles.buttonText}>Guardar</Text>
+              </TouchableOpacity>
+            </View>
         </View>
     )
 }
@@ -199,8 +203,9 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   button:{
-    backgroundColor:'gray',
+    backgroundColor:'#3b7cff',
     margin:5,
+    borderRadius:5,
   },
   buttonText:{
     fontSize:20,
@@ -208,13 +213,18 @@ const styles = StyleSheet.create({
     paddingHorizontal:20,
   },  
   saveButton:{
-    backgroundColor: 'red',
+    backgroundColor: '#1ceb4c',
     margin:5,
+    borderRadius:5,
   },
   input:{
     padding:5,
-    borderWidth:2,
-
+    borderWidth:0.5,
+    width:'90%',
+    marginHorizontal:'5%',
+    fontSize:16,
+    fontWeight:'bold',
+    backgroundColor: 'rgba(211, 214, 196, 0.5)'
   },
 })
 

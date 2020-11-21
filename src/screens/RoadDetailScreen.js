@@ -12,6 +12,7 @@ const RoadDetailScreen = ({route}) => {
 
     const Road = route.params.item
     const first = Road.roads[0]
+    const last = Road.roads[Road.roads.length -1]
     console.log('first: ', first)
 
     return(
@@ -40,7 +41,7 @@ const RoadDetailScreen = ({route}) => {
                 <Polyline 
                     coordinates={Road.roads.map( loc => loc.coords)}
                     strokeWidth={10}
-                    fillColor="rgba(255, 0, 99, 1)"
+                    fillColor="rgba(0, 0, 0, 1)"
                     strokeColor="rgba(255, 0, 99, 0.7)"
                 />
             </MapView>

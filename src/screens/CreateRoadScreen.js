@@ -13,9 +13,9 @@ import Map from '../components/Map'
 import Geolocation from 'react-native-geolocation-service';
 
 import { useDispatch, useSelector } from 'react-redux'
-import { saveRoads, storeCurrentRoad } from '../store/actions'
+import { saveRoads, storeCurrentRoad, clearCurrentRoad } from '../store/actions'
 
-const CreateRoadScreen = () => {
+const CreateRoadScreen = ({navigation}) => {
     //renders map
 
     const [location, setLocation] = useState(null)
@@ -23,15 +23,15 @@ const CreateRoadScreen = () => {
     const [watchId, setWatchId] = useState(null)
     const [title, setTitle] = useState('')
 
-    console.log(recording)
+    //.log(recording)
 
     const dispatch = useDispatch()
 
     const road = useSelector((state) => state.currentRoad)
-    console.log('road: ', road)
+    //console.log('road: ', road)
 
     const loc = useSelector((state) => state.locations)
-    console.log('myloc: ', loc)
+    //console.log('myloc: ', loc)
 
     async function  hasLocationPermission(){
       //request and check location permission
@@ -135,11 +135,17 @@ const CreateRoadScreen = () => {
     
     };
 
-    const startLocationUpdates = async () => {
-        //starts the tracking again
-        setRecording(true)
-        getLocationUpdates()
+    const startNewLocationUpdates = () => {
+      dispatch(clearCurrentRoad())
+      setRecording(true)
+      getLocationUpdates()
     }
+
+    // const startLocationUpdates = async () => {
+    //     //starts the tracking again
+    //     setRecording(true)
+    //     getLocationUpdates()
+    // }
 
     const stopLocationUpdates = () => {
         //stops the tracking
@@ -160,10 +166,16 @@ const CreateRoadScreen = () => {
     return (
         <View style={styles.container} >
             <Map coords={location ?location.coords : null} />
-            <TextInput onChangeText={(text) => setTitle(text)} 
-              style={styles.input}
-              placeholder='nombre'
-            />
+            {
+              recording
+              ? null
+              : <TextInput onChangeText={(text) => setTitle(text)} 
+                  style={styles.input}
+                  placeholder='nombre'
+                  value={title}
+                />
+            }
+            
             <View style={{flexDirection:'row'}}>
               {
                   recording
@@ -176,21 +188,28 @@ const CreateRoadScreen = () => {
                     </TouchableOpacity>
                     
                   </>
-                  :<TouchableOpacity
-                      onPress={()=>{
-                          startLocationUpdates()
-                      }}
-                      style={styles.button}
-                  >
-                      <Text style={styles.buttonText} >Empezar a grabar.</Text>
-                  </TouchableOpacity>
+                  :<>
+                    <TouchableOpacity
+                        onPress={()=>{
+                            startNewLocationUpdates()
+                        }}
+                        style={styles.button}
+                    >
+                        <Text style={styles.buttonText} >Nuevo</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                    onPress={() => {
+                      dispatch(storeCurrentRoad(title, () => navigation.navigate('RoadList')))
+                      setTitle('')
+                    }}
+                    style={styles.saveButton}
+                    >
+                    <Text style={styles.buttonText}>Guardar</Text>
+                    </TouchableOpacity>
+                  </>
               }
-              <TouchableOpacity
-                onPress={() => dispatch(storeCurrentRoad(title))}
-                style={styles.saveButton}
-              >
-                <Text style={styles.buttonText}>Guardar</Text>
-              </TouchableOpacity>
+              
             </View>
         </View>
     )

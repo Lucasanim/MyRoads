@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { 
     View,
     Text,
@@ -8,11 +8,20 @@ import {
 
  } from 'react-native'
 
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+
+import { fetchLocalStorage } from '../store/actions'
 
 const RoadListScreen = ({navigation}) => {
+    //List all roads and fetch them from local storage
 
     const tracks = useSelector((state) => state.locations)
+
+    const dispatch = useDispatch()
+
+    useEffect(()=>{
+        dispatch(fetchLocalStorage())
+    },[])
 
     return(
         <View style={styles.container} >

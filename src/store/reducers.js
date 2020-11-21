@@ -31,6 +31,12 @@ export const locationReducer = (state=initialState, action) => {
                     }
                 ]
             })
+
+        case 'FETCH_LOCAL_STORAGE':
+            return Object.assign({}, state, {
+                locations: action.payload
+            })
+
         default:
             return state
     }

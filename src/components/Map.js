@@ -1,5 +1,5 @@
-import React, {useEffect, useState, useRef} from 'react'
-import {View,Text,StyleSheet, PermissionsAndroid, Platform} from 'react-native'
+import React, {useEffect, useRef} from 'react'
+import {View,StyleSheet,} from 'react-native'
 
 import MapView ,{PROVIDER_GOOGLE, Circle} from 'react-native-maps'
 

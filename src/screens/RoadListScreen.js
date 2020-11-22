@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import { 
     View,
     Text,
@@ -10,7 +10,9 @@ import {
 
 import { useSelector, useDispatch } from 'react-redux'
 
-import { fetchLocalStorage } from '../store/actions'
+import { fetchLocalStorage, deleteRoad } from '../store/actions'
+
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 const RoadListScreen = ({navigation}) => {
     //List all roads and fetch them from local storage
@@ -30,13 +32,23 @@ const RoadListScreen = ({navigation}) => {
                 data={tracks}
                 keyExtractor={(track) => track.id}
                 renderItem={({item}) => {
-                    return <TouchableOpacity
-                        onPress={() => navigation.navigate('RoadDetail', {item})}
-                        style={styles.textContainer}
-                    >
-                        <Text style={styles.text} >{item.title} </Text>
-                        <Text style={styles.dateText} >{item.date} </Text>
-                    </TouchableOpacity>
+                    return <View style={styles.textContainer} >
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate('RoadDetail', {item})}
+                            style={styles.titleContainer}
+                        >
+                            <Text style={styles.text} >{item.title} </Text>
+                            <Text style={styles.dateText} >{item.date} </Text>
+                            
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            onPress={() => dispatch(deleteRoad(item.id))}
+                            style={styles.deleteButton}
+                        >
+                            <Icon name="delete-circle-outline" size={40}/>
+                        </TouchableOpacity>
+                    </View>
                 }}
             />
         </View>
@@ -58,7 +70,17 @@ const styles = StyleSheet.create({
         backgroundColor:'#ededed',
         marginVertical:5,   
         borderRadius: 10,
-        marginHorizontal:'5%'
+        marginHorizontal:'5%',
+        flexDirection:'row'
+    },
+    titleContainer:{
+        flex:1,
+        justifyContent:'center'
+    },
+    deleteButton:{
+        flex:0.3,
+        alignItems:'center',
+        justifyContent:'center',
     },
     dateText:{
         fontSize:16,

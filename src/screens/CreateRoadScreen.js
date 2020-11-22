@@ -87,7 +87,7 @@ const CreateRoadScreen = ({navigation}) => {
 
         Geolocation.getCurrentPosition(
             (position) => {
-              console.log('pos:', position);
+              //console.log('pos:', position);
               setLocation(position)
             },
             (error) => {
@@ -115,7 +115,7 @@ const CreateRoadScreen = ({navigation}) => {
 
                 dispatch(saveRoads(position))
 
-                console.log('watchid: ',position);
+                //console.log('watchid: ',position);
                 },
                 (error) => {
                 console.log(error);
@@ -153,8 +153,8 @@ const CreateRoadScreen = ({navigation}) => {
         if (watchId !== null) {
             Geolocation.clearWatch(watchId);
             setWatchId(null)
-            setRecording(false)
-          }
+        }
+        setRecording(false)
     }
 
     useEffect(() => {

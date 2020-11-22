@@ -8,12 +8,14 @@ import {
 
 import MapView, {PROVIDER_GOOGLE, Polyline, MarkerAnimated} from 'react-native-maps'
 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+
 const RoadDetailScreen = ({route}) => {
 
     const Road = route.params.item
     const first = Road.roads[0]
     const last = Road.roads[Road.roads.length -1]
-    console.log('first: ', first)
+    //console.log('first: ', first)
 
     return(
         <View style={styles.container} >
@@ -40,7 +42,14 @@ const RoadDetailScreen = ({route}) => {
             >
                 <MarkerAnimated 
                     coordinate={first.coords}
-                />
+                >
+                    <Icon name="map-marker-radius-outline" size={30} />
+                </MarkerAnimated>
+                <MarkerAnimated 
+                    coordinate={last.coords}
+                >
+                    <Icon name="map-marker-check" size={30} color="rgba(255, 0, 99, 0.7)" />
+                </MarkerAnimated>
                 <Polyline 
                     coordinates={Road.roads.map( loc => loc.coords)}
                     strokeWidth={10}
@@ -48,7 +57,7 @@ const RoadDetailScreen = ({route}) => {
                     strokeColor="rgba(255, 0, 99, 0.7)"
                 />
             </MapView>
-            <Text>{Road.date} </Text>
+            <Text style={styles.date} >{Road.date} </Text>
         </View>
     )
 }
@@ -56,11 +65,14 @@ const RoadDetailScreen = ({route}) => {
 const styles = StyleSheet.create({
     container:{
         ...StyleSheet.absoluteFillObject,
-        height:400,
+        height:'100%',
     },
     map:{
         ...StyleSheet.absoluteFillObject,
     }, 
+    date: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)'
+    },
 })
 
 export default RoadDetailScreen
